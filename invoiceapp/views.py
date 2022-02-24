@@ -1,29 +1,40 @@
+from itertools import product
 from django.shortcuts import render
-import io
-from django.http import FileResponse
-from reportlab.pdfgen import canvas
 
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+
+
+# This must for using html2pdf
+# Quick fix is to add reportlab==3.6.6 in requirements.txt until this commit is merged.
 
 
 def home(request):
-    return render(request,'invoiceapp/pdf.html')
-
+    return render(request,'invoiceapp/invoice.html')
 
 def pdf_generator(request):
-    buffer = io.BytesIO()
+    # products = Product.objects.all()
 
-    # Create the PDF object, using the buffer as its "file."
-    p = canvas.Canvas(buffer)
+    template_path = 'invoiceapp/pdf.html'
+    products = ['altaf','hosen']
+    context = {'products': products}
 
-    # Draw things on the PDF. Here's where the PDF generation happens.
-    # See the ReportLab documentation for the full list of functionality.
-    p.drawString(100, 100, "Hello world.")
+    response = HttpResponse(content_type='application/pdf')
 
-    # Close the PDF object cleanly, and we're done.
-    p.showPage()
-    p.save()
+    response['Content-Disposition'] = 'filename="products_report.pdf"'
 
-    # FileResponse sets the Content-Disposition header so that browsers
-    # present the option to save the file.
-    buffer.seek(0)
-    return FileResponse(buffer, as_attachment=True, filename='hello.pdf')
+    template = get_template(template_path)
+
+    html = template.render(context)
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
+
+
+
