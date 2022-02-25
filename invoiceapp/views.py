@@ -13,27 +13,31 @@ from xhtml2pdf import pisa
 def home(request):
     return render(request,'invoiceapp/invoice.html')
 
+
 def pdf_generator(request):
-    # products = Product.objects.all()
+    return render(request,'invoiceapp/pdf.html')
 
-    template_path = 'invoiceapp/pdf.html'
-    products = ['altaf','hosen']
-    context = {'products': products}
+# def pdf_generator(request):
+#     # products = Product.objects.all()
 
-    response = HttpResponse(content_type='application/pdf')
+#     template_path = 'invoiceapp/pdf.html'
+#     products = ['altaf','hosen']
+#     context = {'products': products}
 
-    response['Content-Disposition'] = 'filename="products_report.pdf"'
+#     response = HttpResponse(content_type='application/pdf')
 
-    template = get_template(template_path)
+#     response['Content-Disposition'] = 'filename="products_report.pdf"'
 
-    html = template.render(context)
-    # create a pdf
-    pisa_status = pisa.CreatePDF(
-       html, dest=response)
-    # if error then show some funy view
-    if pisa_status.err:
-       return HttpResponse('We had some errors <pre>' + html + '</pre>')
-    return response
+#     template = get_template(template_path)
+
+#     html = template.render(context)
+#     # create a pdf
+#     pisa_status = pisa.CreatePDF(
+#        html, dest=response)
+#     # if error then show some funy view
+#     if pisa_status.err:
+#        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+#     return response
 
 
 
