@@ -1,10 +1,11 @@
 from itertools import product
+from multiprocessing import context
 from django.shortcuts import render
 
 from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
-from .models import Invoice
+from .models import Product
 
 
 
@@ -29,35 +30,43 @@ def home(request):
     return render(request,'invoiceapp/invoice_form.html')
 
 
-# def pdf_generator(request):
-
-#     return render(request,'invoiceapp/pdf.html')
-
-
 def pdf_generator(request):
-    products = Invoice.objects.all()
-    template_path = 'invoiceapp/pdf.html'
+    products =Product.objects.all()
+    subtotal =[]
     for data in products:
-        for data in products.product_set.all:
-            print(data)
-            print(data.client_name)
-    context = {'products': products}
+        quantity= data.quantity
+        price= data.price
+        subtotal.append(quantity*price)
+    
+    context={
+        'products':products,
+        'subtotal':subtotal
+    }
+    return render(request,'invoiceapp/pdf.html',context)
 
-    response = HttpResponse(content_type='application/pdf') 
 
-    response['Content-Disposition'] = 'filename="products_report.pdf"'
 
-    template = get_template(template_path)
+# def pdf_generator(request):
+#     # products = Product.objects.all()
 
-    html = template.render(context)
-    # create a pdf
-    pisa_status = pisa.CreatePDF(
-       html, dest=response)
-    # if error then show some funy view
-    if pisa_status.err:
-       return HttpResponse('We had some errors <pre>' + html + '</pre>')
-    return response
+#     template_path = 'invoiceapp/pdf.html'
+#     products = ['altaf','hosen']
+#     context = {'products': products}
 
+#     response = HttpResponse(content_type='application/pdf')
+
+#     response['Content-Disposition'] = 'filename="products_report.pdf"'
+
+#     template = get_template(template_path)
+
+#     html = template.render(context)
+#     # create a pdf
+#     pisa_status = pisa.CreatePDF(
+#        html, dest=response)
+#     # if error then show some funy view
+#     if pisa_status.err:
+#        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+#     return response
 
 
 
