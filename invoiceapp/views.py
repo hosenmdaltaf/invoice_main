@@ -4,6 +4,9 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
+from .models import Invoice
+
+
 
 
 # This must for using html2pdf
@@ -11,33 +14,49 @@ from xhtml2pdf import pisa
 
 
 def home(request):
-    return render(request,'invoiceapp/invoice.html')
+    if request.method=="POST":
+        product_name = request.POST.get('product_name')
+        product_des = request.POST.get('product_des')
+        rate = request.POST.get('rate')
+        quantity = request.POST.get('quantity')
+        price = request.POST.get('price')
+        total = request.POST.get('total')
+        amount_paid = request.POST.get('amount_paid')
+        balance_due = request.POST.get('balance_due')
+        notes= request.POST.get('notes')
+        print(product_name,product_des,rate,quantity,price,total,amount_paid,balance_due,notes)
+
+    return render(request,'invoiceapp/invoice_form.html')
+
+
+# def pdf_generator(request):
+
+#     return render(request,'invoiceapp/pdf.html')
 
 
 def pdf_generator(request):
-    return render(request,'invoiceapp/pdf.html')
+    products = Invoice.objects.all()
+    template_path = 'invoiceapp/pdf.html'
+    for data in products:
+        for data in products.product_set.all:
+            print(data)
+            print(data.client_name)
+    context = {'products': products}
 
-# def pdf_generator(request):
-#     # products = Product.objects.all()
+    response = HttpResponse(content_type='application/pdf') 
 
-#     template_path = 'invoiceapp/pdf.html'
-#     products = ['altaf','hosen']
-#     context = {'products': products}
+    response['Content-Disposition'] = 'filename="products_report.pdf"'
 
-#     response = HttpResponse(content_type='application/pdf')
+    template = get_template(template_path)
 
-#     response['Content-Disposition'] = 'filename="products_report.pdf"'
-
-#     template = get_template(template_path)
-
-#     html = template.render(context)
-#     # create a pdf
-#     pisa_status = pisa.CreatePDF(
-#        html, dest=response)
-#     # if error then show some funy view
-#     if pisa_status.err:
-#        return HttpResponse('We had some errors <pre>' + html + '</pre>')
-#     return response
+    html = template.render(context)
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
 
 
 
