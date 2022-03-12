@@ -22,7 +22,7 @@ from billmanage import views as billviews
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('dashboard', billviews.dashboard, name='dashboard'),
+    path('', billviews.dashboard, name='dashboard'),
     path('addbill', billviews.addbill, name='addbill'),
     path('records', billviews.records, name='records'),
     path('invoice/<int:billno>', billviews.invoice, name='invoice'),

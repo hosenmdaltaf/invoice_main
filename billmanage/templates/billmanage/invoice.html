@@ -177,11 +177,6 @@
 						</div>
 
 					</div>
-
-
-					<style>
-						
-					</style>
 					
 				  </div>
 				  <div class="col-6" style="padding-left: 8rem">
@@ -234,7 +229,8 @@
 					</div>
 				 </div>
 				 <label class="mb-2 form-label col-2 col-form-label" style="font-size: 15px; border-bottom: 1px solid gray ;">Items</label>
-				 <div class="table-responsive">
+				
+         <div class="table-responsive">
                     <table class="table card-table table-vcenter text-nowrap datatable">
                       <thead>
                           <tr class="text-center">
@@ -261,6 +257,7 @@
                       </tbody>
                     </table>
                   </div>
+
                 <div style="position: absolute; bottom: 0; right: -54px">
                     <div class="row justify-content-center " style=" text-align: center; margin: auto; zoom: 90%;">
                         
@@ -268,9 +265,9 @@
                             <label class="form-label col-form-label" style="border-bottom: 1px solid gray;">Total Amount:</label>
                             <div class="mt-2" style="font-size: 15px;">Rs. <span id="amt">{{bill.total}}</span></div>
                         </div>
-                        <hr style="    width: 1px;height: auto;margin: 0 10px;padding: 0;">
+                        <hr style="width: 1px;height: auto;margin: 0 10px;padding: 0;">
                         <div class="col-1">
-                            <label class="form-label col-form-label" style="border-bottom: 1px solid gray;">CGST(Tax rate)</label>
+                            <label class="form-label col-form-label" style="border-bottom: 1px solid gray;">Tax rate</label>
                             <div class="mt-2" style="font-size: 15px;"><span id="CGST">{{bill.cgst}}%</span></div>
                         </div>
                         <hr style="width: 1px;height: auto;margin: 0 10px;padding: 0;">
@@ -290,15 +287,16 @@
                             <label class="form-label col-form-label" style="border-bottom: 1px solid gray">Grand Total</label>
                             <div class="mt-2" style="font-size: 15px;">Rs. <span id="grandamt">{{bill.grandtotal}}</span></div>
                         </div>
-                        <div class="col-12 mt-2">
+                        {% comment %} <div class="col-12 mt-2">
                             {% if paisa%}
                                 <label class="form-label col-form-label" style="font-size: 15px;width:max-content; border-bottom: 1px solid gray;">Taka (in words): <span style="color: gray;"> {{rs}} point {{paisa}}</span></label>
                             {% else %}
                                 <label class="form-label col-form-label" style="font-size: 15px;width:max-content;border-bottom: 1px solid gray;">Taka (in words): <span style=" color:gray"> {{rs}}</span></label>
                             {% endif %}
-                        </div>
+                        </div> {% endcomment %}
                     </div>
-                    <div class="row">
+
+              {% comment %} <div class="row">
                         <div class="col-4 mt-2 " style="margin-left: 10px; border: 1.5px solid gray; zoom: 90%;">
                             <label class="form-label col-form-label  pb-0" >Bank Name: <span style="color: gray;"> Bank of Baroda</span></label>
                             <label class="form-label col-form-label  pb-0 pt-1">Bank Account No.: <span style="color: gray;"> 24580400005587</span></label>
@@ -316,15 +314,29 @@
                             <label class="form-label col-form-label  pb-0" style="font-size: 12px;"><b>Signature of Issuing Person</b></label>
                         </div>
 
-                    </div>
+                    </div> 
+
+                    <div class="row">
+                      <div class="col-4 mt-2 " style="margin-left: 10px; border: 1.5px solid gray; zoom: 90%;">
+                          <label class="form-label col-form-label  pb-0" >Bank Name: <span style="color: gray;"> Bank of Baroda</span></label>
+                          <label class="form-label col-form-label  pb-0 pt-1">Bank Account No.: <span style="color: gray;"> 24580400005587</span></label>
+                          <label class="form-label col-form-label  pb-0 pt-1">IFSC Code: <span style="color: gray;">  BARBOKANASH</span></label>
+                          <label class="form-label col-form-label  pb-0 pt-1">Branch: <span style="color: gray;"> Nehru Nagar, Kanpur - 208012</span></label>
+                          <label class="form-label col-form-label  pb-2 pt-1">Pan No.: <span style="color: gray;"> AHVPB2268D</span></label>
+                      </div>
+                    <div>
+
                     <div>
 
                     </div>
                     
                     <p class="text-muted text-center mt-4">This is a Software generated Invoice.</p>
                 </div>
-			  </div>
+			  </div> {% endcomment %}
+
+
 			</div>
+
 		  </div>
         <footer class="footer footer-transparent d-print-none">
           <div class="container">
@@ -346,6 +358,8 @@
         </footer>
       </div>
     </div>
+
+  </div>
     <!-- Libs JS -->
     <script src="{% static 'js/apexcharts.min.js' %}"></script>
     <!-- Tabler Core -->

@@ -100,7 +100,7 @@ def invoice(request, billno):
         paisa = num2words(int(str(amount).split(".")[1]))
     else:
         paisa = False
-    return render(request, 'billmanage/invoice.html', {'bill': billobj, 'items': itemobj, 'rs': rs, 'paisa': paisa, 'gst': gst, 'range':6})
+    return render(request, 'billmanage/newinvoice.html', {'bill': billobj, 'items': itemobj, 'rs': rs, 'paisa': paisa, 'gst': gst, 'range':6})
 
 
 def delete(request, billno):
