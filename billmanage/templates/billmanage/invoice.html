@@ -36,7 +36,7 @@
       background-color: rgb(2, 2, 170);
       color: white;
     }
-    .companyname > span{
+    .companyname > span{ 
         margin:8px
     }
     .duplicatemark{
@@ -150,6 +150,8 @@
 				  <div class="row text-center">
 					  <h2 style="font-weight:600;border-bottom: 2px solid gray; margin-bottom: 2rem;">Tax Invoice</h4>
 				  </div>
+
+          
 				<div class="row">
 				  <div class="col-6">
 					<div class="row">
@@ -228,6 +230,8 @@
 						</div>
 					</div>
 				 </div>
+
+
 				 <label class="mb-2 form-label col-2 col-form-label" style="font-size: 15px; border-bottom: 1px solid gray ;">Items</label>
 				
          <div class="table-responsive">
@@ -364,24 +368,24 @@
     <script src="{% static 'js/apexcharts.min.js' %}"></script>
     <!-- Tabler Core -->
     <script src="{% static 'js/tabler.min.js' %}"></script>
-	<script>
-	function printDiv(divName, i) {
-    var type = parseInt(i);
-    if (type==1){
-      document.getElementById('printstatus').innerHTML= 'Original Copy'; 
+    <script>
+      function printDiv(divName, i) {
+        var type = parseInt(i);
+        if (type==1){
+          document.getElementById('printstatus').innerHTML= 'Original Copy';
+        }
+        else{
+          document.getElementById('printstatus').innerHTML='Duplicate Copy';
+        }
+         var printContents = document.getElementById(divName).innerHTML;
+         var originalContents = document.body.innerHTML;
+    
+         document.body.innerHTML = printContents;
+    
+         window.print();
+    
+         document.body.innerHTML = originalContents;
     }
-    else{
-      document.getElementById('printstatus').innerHTML='Duplicate Copy'; 
-    }
-     var printContents = document.getElementById(divName).innerHTML;
-     var originalContents = document.body.innerHTML;
-
-     document.body.innerHTML = printContents;
-
-     window.print();
-
-     document.body.innerHTML = originalContents;
-}
-	</script>
+      </script>
   </body>
 </html>

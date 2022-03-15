@@ -15,6 +15,10 @@ class bill(models.Model):
     sgst = models.IntegerField(null=True, blank=True)
     total = models.DecimalField(null=False, blank=False, max_digits=12, decimal_places=2)
     grandtotal = models.DecimalField(null=False, blank=False, max_digits=12, decimal_places=2)
+    
+    notice = models.TextField(null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
+    phone = models.CharField(null=True, blank=True,max_length=30)
 
 class item(models.Model): 
     itemno = models.AutoField(primary_key= True, null=False, blank=False)

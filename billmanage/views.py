@@ -17,6 +17,7 @@ def addbill(request):
     billno = bill.objects.count() + 1
     return render(request, 'billmanage/addbill.html', {'billno': billno})
 
+
 def addbill_submitted(request):
     if request.method == "POST":
         amount = []
@@ -28,6 +29,9 @@ def addbill_submitted(request):
         rate = request.POST.getlist('rate[]',False)
         qty = request.POST.getlist('qty[]',False)
         itname = request.POST.getlist('ItemName[]',False)
+        notice =request.POST.get('notice')
+        email =request.POST.get('email')
+        phone =request.POST.get('phone')
         # hsn = request.POST.getlist('hsn[]',False)
         for i in range(len(rate)):
             amt = int(rate[i])*int(qty[i])
@@ -39,11 +43,14 @@ def addbill_submitted(request):
         billno = bill.objects.count() + 1
  
         newbill = bill(
+            notice=notice,
+            email=email,
+            phone=phone,
             billno = billno,
             recipient = request.POST['rname'],
             address = request.POST['address'],
             date = request.POST['date'],
-            GSTno = request.POST['gst'],
+            # GSTno = request.POST['gst'],
             cgst = int(request.POST['CGST']),
             # sgst = int(request.POST['SGST']),
             total = total,

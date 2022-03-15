@@ -4,8 +4,16 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Example 1</title>
-    {% comment %} <link rel="stylesheet" href="style.css" media="all" /> {% endcomment %}
+    <title>Dhaka Solution Invoice</title>
+     <!-- CSS files -->
+     <link href="{% static 'css/tabler.min.css' %}" rel="stylesheet"/>
+     <link href="{% static 'css/tabler-flags.min.css' %}" rel="stylesheet"/>
+     <link href="{% static 'css/tabler-payments.min.css' %}" rel="stylesheet"/>
+     <link href="{% static 'css/tabler-vendors.min.css' %}" rel="stylesheet"/>
+     <link href="{% static 'css/demo.min.css' %}" rel="stylesheet"/>
+     <link href="{% static 'typicons.font-2.1.2/src/font/typicons.css' %}" rel="stylesheet"/>
+   
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   </head>
 
   <style>
@@ -24,13 +32,14 @@
         position: relative;
         width: 21cm;  
         height: 29.7cm; 
-        margin: 0 auto; 
+        margin: 0 auto;
         color: #001028;
         background: #FFFFFF; 
         font-family: Arial, sans-serif; 
         font-size: 12px; 
         font-family: Arial;
       }
+
       
       header {
         padding: 10px 0;
@@ -55,7 +64,7 @@
         font-weight: normal;
         text-align: center;
         margin: 0 0 20px 0;
-        background: url(dimension.png);
+        background: url(../static/img/dimension.png);
       }
       
       #project {
@@ -64,9 +73,10 @@
       
       #project span {
         color: #5D6975;
-        text-align: right;
+        {% comment %} text-align: right; {% endcomment %}
+        text-align: left;
         width: 52px;
-        margin-right: 10px;
+        margin-right: 10px; 
         display: inline-block;
         font-size: 0.8em;
       }
@@ -112,7 +122,8 @@
       
       table td {
         padding: 20px;
-        text-align: right;
+        {% comment %} text-align: right; {% endcomment %}
+        text-align: center;
       }
       
       table td.service,
@@ -145,31 +156,63 @@
         padding: 8px 0;
         text-align: center;
       }
+      .signutre {
+        border-bottom: 1px solid  #5D6975;
+        color: #5D6975;
+        font-size: 2.4em;
+        line-height: 1.4em; 
+        font-weight: normal;
+        text-align: center;
+        margin-top:40px;
+
+      }
+ 
 
   </style>
 
   <body>
+
+
+
+    <ul class="duplicatemark">
+      <li id="printstatus" > Original Copy</li>
+    </ul>
+    <div class="page-header d-print-none">
+      <div class="row align-items-center">
+      <div class="col-auto ms-auto d-print-none">
+        <button type="button" class="btn btn-success" onclick="printDiv('invoice', 1).print();">
+        Print Original
+        </button>
+        <button type="button" class="btn btn-yellow" onclick="printDiv('invoice', 0).print();">
+          Print Duplicate
+          </button>
+      </div>
+      </div>
+    </div>
+    <div id="invoice">
 
     <header class="clearfix">
       <div id="logo">
         <img src="https://dhakasolution.com/img/logo.png">
       </div>
       <h1>INVOICE No. {{bill.billno}}</h1>
+
       <div id="company" class="clearfix">
-        <div><span>DATE</span> {{bill.date}}</div>
-        <div>Company Name: {{bill.recipient}}</div>
-        <div>{{bill.address}}</div>
+        <div>DATE: {{bill.date}}</div>
+        <div>Company Name: Dhaka Solution </div>
+        <div>Uttara,Dhaka,Bangladesh</div>
         <div>(602) 519-0450</div>
         <div><a href="mailto:company@example.com">company@example.com</a></div>
       </div>
+
       <div id="project">
-        <div><span>PROJECT</span> Website development</div>
-        <div><span>CLIENT</span> John Doe</div>
-        <div><span>ADDRESS</span> 796 Silver Harbour, TX 79273, US</div>
-        <div><span>EMAIL</span> <a href="mailto:john@example.com">john@example.com</a></div>
-        <div><span>DATE</span> August 17, 2015</div>
-        <div><span>DUE DATE</span> September 17, 2015</div>
+        <div>Company Name:{{bill.recipient}} </div>
+        <div>Address:{{bill.address}}  </div>
+        <div>{{bill.phone}}</div>
+        <div>Email: <a href="mailto:john@example.com">{{bill.email}}</a></div>
+        <div>Date:{{bill.date}}</div>
       </div>
+
     </header>
 
     <main>
@@ -194,28 +237,6 @@
             <td class="unit">{{item.amount}}</td>
           </tr>
           {% endfor %}
-          {% comment %} <tr>
-            <td class="service">Development</td>
-            <td class="desc">Developing a Content Management System-based Website</td>
-            <td class="unit">$40.00</td>
-            <td class="qty">80</td>
-            <td class="total">$3,200.00</td>
-          </tr>
-          <tr>
-            <td class="service">SEO</td>
-            <td class="desc">Optimize the site for search engines (SEO)</td>
-            <td class="unit">$40.00</td>
-            <td class="qty">20</td>
-            <td class="total">$800.00</td>
-          </tr>
-          <tr>
-            <td class="service">Training</td>
-            <td class="desc">Initial training sessions for staff responsible for uploading web content</td>
-            <td class="unit">$40.00</td>
-            <td class="qty">4</td>
-            <td class="total">$160.00</td>
-          </tr> {% endcomment %}
-
           <tr>
             <td colspan="4">SUBTOTAL</td>
             <td class="total">${{bill.total}}</td>
@@ -229,49 +250,70 @@
             <td class="grand total">${{bill.grandtotal}}</td>
           </tr>
         </tbody>
-      </table>
+      </table> 
       <div id="notices">
+        {% if bill.notice %}
         <div>NOTICE:</div>
-        <div class="notice">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
+        <div class="notice">{{bill.notice}}</div>
+        {% endif %}
       </div>
+
+
+
+    <section style="display:flex; justify-content:space-between; margin-top:25px;">   
+      <div>
+        <div  style="font-size:15px; font-weight:600">
+          Insured signutre
+          <div class="signutre"></div>
+        </div>
+      </div>
+
+
+      <div>
+        <div style="float:right;color:black; margin-bottom:10px;font-size:15px; font-weight:600">(Authorize signutre) </div>
+        <div>
+          <img style="width:80px;height:80px;" src="{% static 'img/stamp.JPEG' %}" alt="logo">
+          <img style="width:80px;height:80px;" src="{% static 'img/sign.JPEG' %}" alt="logo">
+        </div>
+      </div>
+
+
+    </section >
+    <div>Company Name: Dhaka Solution.Company Name: Dhaka Solution .Company Name: </br> Dhaka Solution  </div>
+
+
+
     </main>
-    <footer>
-      Invoice was created on a computer and is valid without the signature and seal.
+
+  </div>
+    <footer> 
+      This is a Software generated Invoice.
     </footer>
 
 
-    <div class="col-auto ms-auto d-print-none">
-        <button type="button" class="btn btn-success" onclick="printDiv('invoice', 1).print();">
-          Print Original
-        </button>
-<button type="button" class="btn btn-yellow" onclick="printDiv('invoice', 0).print();">
-  Print Duplicate
-  </button>
-      </div>
-
-
-        <!-- Libs JS -->
+    <!-- Libs JS -->
     <script src="{% static 'js/apexcharts.min.js' %}"></script>
     <!-- Tabler Core -->
     <script src="{% static 'js/tabler.min.js' %}"></script>
-	<script>
-	function printDiv(divName, i) {
-    var type = parseInt(i);
-    if (type==1){
-      document.getElementById('printstatus').innerHTML= 'Original Copy'; 
-    }
-    else{
-      document.getElementById('printstatus').innerHTML='Duplicate Copy'; 
-    }
-     var printContents = document.getElementById(divName).innerHTML;
-     var originalContents = document.body.innerHTML;
+   
+   
+    <script > 
+      function printDiv(divName, i) {
+        var type = parseInt(i);
+        if (type==1){
+          document.getElementById('printstatus').innerHTML= 'Original Copy';
+        }
+        else{
+          document.getElementById('printstatus').innerHTML='Duplicate Copy';
+        }
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+      }
 
-     document.body.innerHTML = printContents;
+    </script>
 
-     window.print();
-
-     document.body.innerHTML = originalContents;
-}
-	</script>
   </body>
 </html>
