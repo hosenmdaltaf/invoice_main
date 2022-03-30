@@ -48,6 +48,61 @@ def addbill(request):
 
 
 # @login_required(login_url ='/')
+# def addbill_submitted(request):
+#     if request.method == "POST":
+#         amount = []
+#         amountwithtax = []
+#         total = 0
+#         grandtotal = 0
+#         # gst =int(request.POST['CGST'])+int(request.POST['SGST'])
+#         gst =int(request.POST['CGST'])
+#         rate = request.POST.getlist('rate[]',False)
+#         qty = request.POST.getlist('qty[]',False)
+#         itname = request.POST.getlist('ItemName[]',False)
+#         notice =request.POST.get('notice')
+#         email =request.POST.get('email')
+#         phone =request.POST.get('phone')
+#         # hsn = request.POST.getlist('hsn[]',False)
+#         for i in range(len(rate)):
+#             amt = int(rate[i])*int(qty[i])
+#             total += amt
+#             gmt = amt+(amt*gst/100)
+#             grandtotal += gmt
+#             amount.append(amt)
+#             amountwithtax.append(gmt)
+#         billno = bill.objects.count() + 1000
+
+#         newbill = bill(
+#             notice=notice,
+#             email=email,
+#             phone=phone,
+#             billno = billno,
+#             recipient = request.POST['rname'],
+#             address = request.POST['address'],
+#             date = request.POST['date'],
+#             # GSTno = request.POST['gst'],
+#             cgst = int(request.POST['CGST']),
+#             # sgst = int(request.POST['SGST']),
+#             total = total,
+#             grandtotal = grandtotal,
+#         )
+#         newbill.save()
+#         print(len(rate))
+#         for i in range(len(rate)):
+#             newitem = item( 
+#                 itemname = itname[i],
+#                 # hsncode = hsn[i],
+#                 qty = qty[i],
+#                 rate = rate[i],
+#                 amount = amount[i],
+#                 billno = bill.objects.get(billno=billno), 
+#             )
+#             newitem.save()
+#         return invoice(request, billno)
+#     else:
+#         return render(request, 'billmanage/addbill.html')
+
+
 def addbill_submitted(request):
     if request.method == "POST":
         amount = []
@@ -55,37 +110,43 @@ def addbill_submitted(request):
         total = 0
         grandtotal = 0
         # gst =int(request.POST['CGST'])+int(request.POST['SGST'])
-        gst =int(request.POST['CGST'])
+        # gst =int(request.POST['CGST'])
         rate = request.POST.getlist('rate[]',False)
         qty = request.POST.getlist('qty[]',False)
         itname = request.POST.getlist('ItemName[]',False)
         notice =request.POST.get('notice')
         email =request.POST.get('email')
         phone =request.POST.get('phone')
+        issuby =request.POST.get('issuby')
         # hsn = request.POST.getlist('hsn[]',False)
         for i in range(len(rate)):
             amt = int(rate[i])*int(qty[i])
             total += amt
-            gmt = amt+(amt*gst/100)
+            # gmt = amt+(amt*gst/100)
+            gmt = 0
             grandtotal += gmt
             amount.append(amt)
             amountwithtax.append(gmt)
-        billno = bill.objects.count() + 1
+        billno = bill.objects.count() + 1000
 
         newbill = bill(
             notice=notice,
             email=email,
             phone=phone,
+            issuby=issuby,
             billno = billno,
             recipient = request.POST['rname'],
             address = request.POST['address'],
             date = request.POST['date'],
             # GSTno = request.POST['gst'],
-            cgst = int(request.POST['CGST']),
+            # cgst = int(request.POST['CGST']),
             # sgst = int(request.POST['SGST']),
             total = total,
             grandtotal = grandtotal,
         )
+        print('--------------------------test')
+        print(newbill)
+        print(issuby)
         newbill.save()
         print(len(rate))
         for i in range(len(rate)):
@@ -132,7 +193,7 @@ def records(request):
 def invoice(request, billno):
     billobj = bill.objects.get(billno=billno)
     itemobj = item.objects.filter(billno=billno)
-    amount = billobj.grandtotal
+    amount = billobj.total
     amountwithouttax = billobj.total
     amount = float(amount)
     amountwithouttax = float(amountwithouttax)
@@ -143,6 +204,22 @@ def invoice(request, billno):
     else:
         paisa = False
     return render(request, 'billmanage/newinvoice.html', {'bill': billobj, 'items': itemobj, 'rs': rs, 'paisa': paisa, 'gst': gst, 'range':6})
+
+
+# def invoice(request, billno):
+#     billobj = bill.objects.get(billno=billno)
+#     itemobj = item.objects.filter(billno=billno)
+#     amount = billobj.grandtotal
+#     amountwithouttax = billobj.total
+#     amount = float(amount)
+#     amountwithouttax = float(amountwithouttax)
+#     gst = round((amount - amountwithouttax), 2)
+#     rs = num2words(int(str(amount).split(".")[0]))
+#     if (int(str(amount).split(".")[1])>0):
+#         paisa = num2words(int(str(amount).split(".")[1]))
+#     else:
+#         paisa = False
+#     return render(request, 'billmanage/newinvoice.html', {'bill': billobj, 'items': itemobj, 'rs': rs, 'paisa': paisa, 'gst': gst, 'range':6})
 
 
 

@@ -66,9 +66,24 @@
         margin: 0 0 20px 0;
         background: url(../static/img/dimension.png);
       }
+
+      .issuby h2{
+        {% comment %} border-top: 1px solid  #5D6975;
+        border-bottom: 1px solid  #5D6975; {% endcomment %}
+        color: #5D6975;
+        font-size: 1.4em;
+        line-height: 1.4em;
+        font-weight: normal;
+        {% comment %} text-align: center; {% endcomment %}
+        margin: 0 0 20px 0;
+       
+      }
       
       #project {
-        float: left;
+       
+        float: right;
+        text-align:right;
+        margin-right:2px;
       }
       
       #project span {
@@ -82,8 +97,9 @@
       }
       
       #company {
-        float: right;
-        text-align: right;
+        float: left;
+        margin-left:2px;
+       
       }
       
       #project div,
@@ -195,25 +211,31 @@
       <div id="logo">
         <img src="{% static 'img/logo.png' %}">
       </div>
-      <h1>INVOICE No. {{bill.billno}}</h1>
-
-      <div id="company" class="clearfix">
-        <div>DATE: {{bill.date}}</div>
-        <div>Company Name: Ruwaistourism </div>
-        <div>Al Ruwais City, Al Dafra,Abu Dhabi,UAE</div>
-        <div>+971502926757</div>
-        <div><a href="mailto:info@ruwaistourism.ae">info@ruwaistourism.ae</a></div>
-      </div>
+      <h1>INVOICE</h1>
 
       <div id="project">
-        <div>Company Name:{{bill.recipient}} </div>
-        <div>Address:{{bill.address}}  </div>
-        <div>Phone:{{bill.phone}}</div>
-        <div>Email: <a href="mailto:{{bill.email}}">{{bill.email}}</a></div>
-        <div>Date:{{bill.date}}</div>
+
+        <div>Invoice Number : RT{{bill.billno}}</div>
+        <div>Company Name : {{bill.recipient}} </div>
+        <div>Address : {{bill.address}}  </div>
+        <div>Phone : {{bill.phone}}</div>
+        <div>Email : <a href="mailto:{{bill.email}}">{{bill.email}}</a></div>
+        <div>Date  : {{bill.date}}</div>
       </div>
 
+      
+      <div id="company" class="clearfix">
+        {% comment %} <div>DATE : {{bill.date}}</div> {% endcomment %}
+        <div> Ruwaistourism </div>
+        <div>Al Ruwais City, Al Dafra,Abu Dhabi,UAE</div>
+        <div>Phone : +971502926757</div>
+        <div><a href="mailto:info@ruwaistourism.ae">Email : info@ruwaistourism.ae</a></div>
+      </div>
     </header>
+    
+    <div class="issuby">
+      <h2><span  style="color:black;font-weight:bold;">Bill created by</span> : {{bill.issuby}} </h2>
+    </div>
 
     <main>
       <table>
@@ -221,9 +243,9 @@
           <tr>
             <th class="service">S.no</th>
             <th class="desc">DESCRIPTION</th>
-            <th>Quantity</th>
+            <th>QTY</th>
             <th>Rate</th>
-            <th>Amount</th>
+            <th>AED</th>
           </tr>
         </thead>
         <tbody>
@@ -238,26 +260,26 @@
           </tr>
           {% endfor %}
           <tr>
-            <td colspan="4">SUBTOTAL</td>
+            <td colspan="4">TOTAL</td>
             <td class="total">${{bill.total}}</td>
           </tr>
-          <tr>
+          {% comment %} <tr>
             <td colspan="4">TAX {{bill.cgst}}%</td>
             <td class="total">${{gst}}</td>
           </tr>
           <tr>
             <td colspan="4" class="grand total">GRAND TOTAL</td>
             <td class="grand total">${{bill.grandtotal}}</td>
-          </tr>
+          </tr> {% endcomment %}
 
 
           <tr>
-            <td colspan="4" class="grand total">GRAND TOTAL (in words)</td>
+            <td colspan="4" class="grand total">AMOUNT IN WORDS</td>
     
         {% if paisa%}
-            <td class="grand total">{{rs}} point {{paisa}}</td>
+            <td class="grand total">{{rs}} point {{paisa}} Dirhams</td>
         {% else %}
-           <td class="grand total">{{rs}}</td>
+           <td class="grand total">{{rs}} Dirhams</td>
         {% endif %}
           </tr>
 

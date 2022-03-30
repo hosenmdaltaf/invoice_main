@@ -10,7 +10,8 @@ class bill(models.Model):
     recipient = models.TextField(null=False, blank=False, max_length=100)
     address = models.TextField(null=False, blank=False, max_length=200)
     GSTno = models.CharField(null=False, blank=False, max_length=15)
-    cgst = models.IntegerField(null=False, blank=False)
+    # cgst = models.IntegerField(null=False, blank=False) for tax calculation
+    cgst = models.IntegerField(null=True, blank=True)
     # sgst = models.IntegerField(null=False, blank=False)
     sgst = models.IntegerField(null=True, blank=True)
     total = models.DecimalField(null=False, blank=False, max_digits=12, decimal_places=2)
@@ -18,7 +19,8 @@ class bill(models.Model):
     
     notice = models.TextField(null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
-    phone = models.CharField(null=True, blank=True,max_length=30)
+    phone = models.CharField(null=True, blank=True,max_length=30) 
+    issuby = models.CharField(null=True, blank=True,max_length=255) 
 
 class item(models.Model): 
     itemno = models.AutoField(primary_key= True, null=False, blank=False)
