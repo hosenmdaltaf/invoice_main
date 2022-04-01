@@ -54,6 +54,32 @@
       #logo img {
         width: 90px;
       }
+
+
+
+      #logo {
+        /*text-align: left;*/
+        margin-bottom: 10px;
+      }
+      #company_name{
+          margin-bottom: 10px;
+      }
+      #company_name img {
+        width: 190px;
+      }
+      
+      .logo_txt{
+          display:flex;
+          justify-content:space-between;
+      }
+      
+      #logo img {
+        width: 90px;
+      }
+
+
+
+
       
       h1 {
         border-top: 1px solid  #5D6975;
@@ -208,9 +234,32 @@
     <div id="invoice">
 
     <header class="clearfix">
-      <div id="logo">
+
+
+      <div class="logo_txt">
+        <div id="logo">
+          <img src="{% static 'img/logo.png' %}">
+        </div>
+        
+          <div id="company_name">
+  <!--        <h2 style="font-size: 1.4em;color:red;">Al Ruwais Tourism</h2>-->
+  <!--        <h2 style="font-size: 1.4em;color:red;">-->
+  <!--الرويس للسياحة ذ م م</h2>
+  -->
+            <img src="{% static 'img/name.svg' %}">
+        </div>
+        
+          </div> 
+
+
+
+
+
+
+
+      {% comment %} <div id="logo">
         <img src="{% static 'img/logo.png' %}">
-      </div>
+      </div> {% endcomment %}
       <h1>INVOICE</h1>
 
       <div id="project">
@@ -306,8 +355,8 @@
       <div>
         <div style="float:right;color:black; margin-bottom:10px;font-size:15px; font-weight:600">(Authorize signutre) </div>
         <div>
-          <img style="width:80px;height:80px;" src="{% static 'img/stamp.jpeg' %}" alt="logo">
-          <img style="width:80px;height:80px;" src="{% static 'img/sign.png' %}" alt="logo">
+          <img style="width:80px;height:80px;" src="{% static 'img/Stump.svg' %}" alt="logo">
+          <img style="width:80px;height:80px;" src="{% static 'img/Signature.svg' %}" alt="logo">
         </div>
       </div>
     </section >
