@@ -208,13 +208,22 @@
         margin-top:40px;
 
       }
- 
+
+      @media print {
+        @page {
+          margin-top: 0;
+          margin-bottom: 0;
+        }
+        body {
+          padding-top: 72px;
+          padding-bottom: 72px ;
+        }
+      }
+      
 
   </style>
 
   <body>
-
-
 
     <ul class="duplicatemark">
       <li id="printstatus" > Original Copy</li>
@@ -231,7 +240,7 @@
       </div>
       </div>
     </div>
-    <div id="invoice">
+    <div id="invoice" >
 
     <header class="clearfix">
 
@@ -242,24 +251,10 @@
         </div>
         
           <div id="company_name">
-  <!--        <h2 style="font-size: 1.4em;color:red;">Al Ruwais Tourism</h2>-->
-  <!--        <h2 style="font-size: 1.4em;color:red;">-->
-  <!--الرويس للسياحة ذ م م</h2>
-  -->
             <img src="{% static 'img/name.svg' %}">
         </div>
-        
           </div> 
 
-
-
-
-
-
-
-      {% comment %} <div id="logo">
-        <img src="{% static 'img/logo.png' %}">
-      </div> {% endcomment %}
       <h1>INVOICE</h1>
 
       <div id="project">
@@ -275,10 +270,10 @@
       
       <div id="company" class="clearfix">
         {% comment %} <div>DATE : {{bill.date}}</div> {% endcomment %}
-        <div> Ruwaistourism </div>
+        <div> Ruwais Tourism </div>
         <div>Al Ruwais City, Al Dafra,Abu Dhabi,UAE</div>
-        <div>Phone : +971502926757</div>
-        <div><a href="mailto:info@ruwaistourism.ae">Email : info@ruwaistourism.ae</a></div>
+        <div>Phone : +971562921023</div>
+        <div><a href="mailto:booking@ruwaistourism.ae">Email : booking@ruwaistourism.ae</a></div>
       </div>
     </header>
     
@@ -286,7 +281,7 @@
       <h2><span  style="color:black;font-weight:bold;">Bill created by</span> : {{bill.issuby}} </h2>
     </div>
 
-    <main>
+    <main >
       <table>
         <thead>
           <tr>
@@ -323,7 +318,7 @@
 
 
           <tr>
-            <td colspan="4" class="grand total">AMOUNT IN WORDS</td>
+            <td colspan="4" class="grand total">Amount in words</td>
     
         {% if paisa%}
             <td class="grand total">{{rs}} point {{paisa}} Dirhams</td>
@@ -365,13 +360,12 @@
       Kindly treat this as an official receipt for your records.</div> {% endcomment %}
 
       <footer style="font-size:12px; font-weight:600;"> 
-        P.O 12322, Ruwais City, Abu Dhabi Mob: +971 50  9457680, +971 562921023, Email: info@ruwaistourism.ae, www.ruwaistourism.ae
+        P.O 12322, Ruwais City, Abu Dhabi Mob: +971562921023, Email: booking@ruwaistourism.ae, www.ruwaistourism.ae
       </footer> 
      
   </main>
 
   </div>
-
 
 
     <!-- Libs JS -->

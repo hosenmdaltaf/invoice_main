@@ -42,7 +42,7 @@ def logout_view(request):
 
 # @login_required(login_url ='/')
 def addbill(request):
-    billno = bill.objects.count() + 1
+    billno = bill.objects.count() + 1000
     return render(request, 'billmanage/addbill.html', {'billno': billno})
 
 
@@ -144,11 +144,7 @@ def addbill_submitted(request):
             total = total,
             grandtotal = grandtotal,
         )
-        print('--------------------------test')
-        print(newbill)
-        print(issuby)
         newbill.save()
-        print(len(rate))
         for i in range(len(rate)):
             newitem = item( 
                 itemname = itname[i],
